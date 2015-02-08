@@ -2,9 +2,9 @@
 # install lxde-core components and lightdm
 ## Cleanup desktop
 rm -rf ~/Desktop/*
-cp ~/.config/lxpanel/LXDE/panels/panel \
+cp ~/.config/lxpanel/LXDE-pi/panels/panel \
 /var/tmp/panel.bkp
-cat <<EOF2 | tee ~/.config/lxpanel/LXDE/panels/panel
+cat <<EOF2 | tee ~/.config/lxpanel/LXDE-pi/panels/panel
 Global {
     edge=bottom
     allign=left
@@ -29,11 +29,11 @@ Global {
 }
 EOF2
 sed --in-place "s/wallpaper_mode.*/wallpaper_mode=0/g" \
-/home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
+/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
 sed --in-place "s/wallpaper=.*/wallpaper=/g" \
-/home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
+/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
 sed --in-place "s/desktop_bg=.*/desktop_bg=#000000/g" \
-/home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
+/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
 sed --in-place "s/show_trash=.*/show_trash=0/g" \
 /home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
 ####apt-get -y remove pcmanfm
