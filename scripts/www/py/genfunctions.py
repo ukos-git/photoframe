@@ -317,3 +317,40 @@ def setShutdownMinute(minute=0):
 def restartPi():
   output = subprocess.check_output(["/usr/bin/sudo /sbin/shutdown -rF 0"],shell=True,stderr=subprocess.PIPE)
 
+## get slide sequence method
+## "sequence": "ordered",
+## "duration": "5",
+def getSlidesequence():
+
+  f = open('/home/pi/pp_home/pp_profiles/livephoto/pp_showlist.json', 'r')
+  currentslidesequence=2
+  for line in f:
+      searchresult = re.search('"sequence":\s\s*"(.*)"', line)
+      if searchresult:
+        if searchresult.group(1) == 'ordered':
+        	currentslidesequence=0
+        elif searchresult.group(1) == 'shuffle':
+        	currentslidesequence=1
+  f.close()
+
+  return currentslidesequence
+
+
+## set slide sequence method
+def setSlidesequence(shuffle=1):
+  if shuffle==1:
+  	slidesequence="\"sequence\": \"shuffle\""
+  elif shuffle==0:
+  	slidesequence="\"sequence\": \"ordered\""
+  filename='/home/pi/pp_home/pp_profiles/livephoto/pp_showlist.json'
+  with open(filename) as f:
+    file_str = f.read()
+    f.close()
+
+  file_str = re.sub(r'"sequence":\s\s*"(.*)"',slidesequence,file_str,1)
+## file_str = re.sub(r'("duration": )\s*"\d+"\s*,', r'\1"' + duration + '",',file_str)
+
+  print file_str
+  with open(filename, "w") as f:
+    f.write(file_str)
+    f.close()

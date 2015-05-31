@@ -11,6 +11,11 @@ from genfunctions import *
 #import cgitb
 #cgitb.enable()
 
+#import logging
+#LOG_FILENAME = '/var/tmp/pp_www'
+#logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG,)
+#logging.debug('change.py called')
+
 form=cgi.FieldStorage()
 message=""
 restartNecessary = False
@@ -93,6 +98,15 @@ if "shutdownminute" in form:
       message=message+"changing shutdownminute to " + newShutdownMinute + "</br>"
       setShutdownMinute(newShutdownMinute)
 
+if "slidesequence" in form:
+    if getSlidesequence() == 0:
+      message=message+"Enabling Shuffle</br>"
+      setSlidesequence(1)
+else:
+    if getSlidesequence() == 1:
+      message=message+"Disabling Shuffle</br>"
+      setSlidesequence(0)
+      
 ## Generate HTML
 
 if restartNecessary:
@@ -104,6 +118,8 @@ for line in f:
         print line
 
 f.close()
+
+#logging.debug('Message: %s',message)
 
 if restartNecessary:
   restartPi() 

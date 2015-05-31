@@ -30,6 +30,10 @@ if getPowerMgtEnabled()=="enabled":
 currentmailretrieveinterval=getEmailInterval()
 shutdownmin=getShutdownMinute()
 shutdownhour=getShutdownHour()
+seqshuf=""
+if getSlidesequence()==1:
+	seqshuf="checked"
+
 
 # Volume levels
 volume = 0
@@ -130,7 +134,7 @@ for line in f:
 	line = re.sub(r'\[\[-PMENABLED-\]\]', pmgtenabled, line)
 	line = re.sub(r'\[\[-SHUTDOWNH-\]\]', shutdownhouroption, line) 
 	line = re.sub(r'\[\[-SHUTDOWNM-\]\]', shutdownminoption, line) 
-
+	line = re.sub(r'\[\[-SEQSHUF-\]\]', seqshuf, line)
         print line
 
 f.close()

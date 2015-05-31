@@ -31,6 +31,9 @@
 				[[-SLIDEDURATION-]]
 			</select>
 		</div>
+		<div class="checkbox">
+			<input type="checkbox" name="slidesequence" value="slidesequence" [[-SEQSHUF-]]> Shuffle Enabled
+		</div>
 		
 		<h1>Wifi</h1>
 		<div class="checkbox">
@@ -82,7 +85,7 @@
 				[[-SHUTDOWNM-]]
                 	 </select>
 		</div>
-	
+		
 		<input type="submit" value="Submit">  
 	</form>
 	</div>
