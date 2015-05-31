@@ -348,9 +348,7 @@ def setSlidesequence(shuffle=1):
     f.close()
 
   file_str = re.sub(r'"sequence":\s\s*"(.*)"',slidesequence,file_str,1)
-## file_str = re.sub(r'("duration": )\s*"\d+"\s*,', r'\1"' + duration + '",',file_str)
 
-  print file_str
   with open(filename, "w") as f:
     f.write(file_str)
     f.close()
