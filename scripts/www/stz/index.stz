@@ -34,7 +34,9 @@
 		<div class="checkbox">
 			<input type="checkbox" name="slidesequence" value="slidesequence" [[-SEQSHUF-]]> Shuffle Enabled
 		</div>
-		
+		<div>
+		<h2><a href=mediascan.py><button type=button>Scan Local Media</button></a></h2>
+		</div>
 		<h1>Wifi</h1>
 		<div class="checkbox">
 			<input type="checkbox" name="wifienabled" value="wifienabled" [[-WIFIENABLED-]]/> Enabled
