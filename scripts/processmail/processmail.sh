@@ -84,8 +84,11 @@ then
   sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
   # Replace double by single quote
   sed -i 's/"/\x27/g' ${MEDIAMETA}
-  /home/pi/processmail/rebuild_media.sh
-  sudo /etc/init.d/lightdm restart
+  	if [ $imgcount -gt 0 ] ;
+  	then
+  	/home/pi/processmail/rebuild_media.sh
+  	sudo /etc/init.d/lightdm restart
+  	fi
 else
   if [ $gmresult -eq 0 ] ;
   then
