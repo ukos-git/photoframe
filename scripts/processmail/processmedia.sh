@@ -2,14 +2,12 @@
 
 # 20150527 - Altered processmail.sh script to only process files in TMPPROCDIR
 
-# NEWMAILDIR received new maildir
 # TMPPROCDIR tmp dir for processing new attachments
 # MEDIA      destination dir for media files
 # MEDIAMETA  meta-data file for media
 # MAXPCTUSG  maximum allow percentage of diskspace
 
-NEWMAILDIR=/home/pi/mail.mbox/new
-TMPPROCDIR=/home/pi/processmail/tmp
+TMPPROCDIR=/home/pi/localmediatmp
 MEDIA=/home/pi/pp_home/media
 MEDIAMETA=/home/pi/pp_home/media-metadata
 MAXPCTUSG=95
@@ -34,6 +32,8 @@ cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
 # log status
 status=`date +"%F at %T"`
 
+echo $status > /var/tmp/processmedia.sts
+
 # if e-mail retrieved successfully
 cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
 
@@ -47,11 +47,8 @@ imgcount=0
 		imgcount=$(($imgcount + 1))
 		
 		filename="${attach##*/}"
-		echo $filename
 		filename="${filename%.*}"
-		echo $filename
 		filename=${filename// /_}
-		echo $filename
 		echo $filename > /var/tmp/processmedia.sts
 		
 		extension="${attach##*.}"
@@ -79,8 +76,12 @@ imgcount=0
   status="${status} success ${imgcount} new images retrieved"
 
   cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
-  /home/pi/processmail/rebuild_media.sh
-  sudo /etc/init.d/lightdm restart
-
-echo $status > /var/tmp/processmail.sts
+  	
+  	if [ $imgcount -gt 0 ] ;
+  	then
+  	/home/pi/processmail/rebuild_media.sh
+  	sudo /etc/init.d/lightdm restart
+  	fi
+  	
+echo $status > /var/tmp/processmedia.sts
 
