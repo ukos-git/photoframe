@@ -1,6 +1,9 @@
-PIChannel
-=========
+PIChannel_dea
+=============
 
+Fork of original PIChannel with tweaks:
+Shuffle playback mode
+Ability to upload and scan for media (not emailed media)
 
 # For detailed installation instructions 
 
