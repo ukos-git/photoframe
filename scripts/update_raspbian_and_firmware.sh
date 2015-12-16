@@ -1,6 +1,6 @@
 #!/bin/sh
 # remove to save upgrade
-apt-get -y remove wolfram-engine smbclient samba-common
+apt-get -y remove wolfram-engine
 # update to latest raspbian
 apt-get -y update && apt-get -y dist-upgrade \
 && apt-get -y autoremove && apt-get -y autoclean \
