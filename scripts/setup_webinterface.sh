@@ -19,20 +19,20 @@ mkdir -p /home/pi/www/stz
 mkdir -p /home/pi/www/py
 
 cd /home/pi/www/http
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/change.py
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/index.py
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/change.py
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/index.py
 cd /home/pi/www/http/css
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/css/default.css
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/css/default.css
 cd /home/pi/www/http/img
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/img/pichannel_logo.png
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/img/pichannel_title.png
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/img/pichannel_logo.png
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/img/pichannel_title.png
 cd /home/pi/www/http/js
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/http/js/spin.js
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/js/spin.js
 cd /home/pi/www/py
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/py/genfunctions.py
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/py/genfunctions.py
 cd /home/pi/www/stz
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/stz/index.stz
-wget https://raw.githubusercontent.com/reddipped/PIChannel/master/scripts/www/stz/wait.stz
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/stz/index.stz
+wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/stz/wait.stz
 chmod u+x /home/pi/www/http/*.py
 chmod u+x /home/pi/www/py/*.py
 sudo chown -R pi:pi /var/log/lighttpd
