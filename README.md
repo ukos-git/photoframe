@@ -9,6 +9,7 @@ List of Improvements
 =============
 * Installation scripts make use of the [raspi-config](https://github.com/RPi-Distro/raspi-config) script
 * reduced the use of wget and used a clone from github instead
+* support for different locale
 * Shuffle playback mode
 * upload media via web interface
 * scan for media that was not emailed

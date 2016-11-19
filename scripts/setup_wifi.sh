@@ -14,8 +14,8 @@ sed --in-place "s/^\(iface default.*\)/#\1/" /etc/network/interfaces
 mkdir /root/scripts
 cat <<EOF2 > /root/scripts/wifimonitor.sh
 #!/bin/sh
-
-if ! ifconfig wlan0 | grep -q "inet addr:" ; then
+export LC_MESSAGES=POSIX
+if ! ifconfig wlan0 | grep -q -i "inet[[:space:]]\+addr"; then
   echo "Network connection down! Attempting reconnection."
   /sbin/ifup --force wlan0
 fi
