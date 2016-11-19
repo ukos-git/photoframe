@@ -1,4 +1,4 @@
-#!/bin/sh  
+#!/bin/sh
 
 # NEWMAILDIR received new maildir
 # TMPPROCDIR tmp dir for processing new attachments
@@ -30,7 +30,7 @@ while [ ${MAXPCTUSG} -lt $(df -h  ${MEDIA} | awk '{ print $5 }' | tail -1 | cut 
 do
   removefile=$(ls -1 ${MEDIA} | sort | head -1)
   if [ ! -z "${removefile}" ] ;
-  then 
+  then
     rm "${MEDIA}/$removefile"
     cat ${MEDIAMETA}.TMP | grep -v "$removefile" > ${MEDIAMETA}.TMP
   fi
@@ -78,10 +78,10 @@ then
             mv "${attach}" "${MEDIA}/${medianame}"
         fi
         echo ${medianame} ${shortmessage} >> ${MEDIAMETA}.TMP
-      done      
+      done
      fi
      rm -f $file
-  done 
+  done
 
   status="${status} success ${imgcount} new images retrieved"
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # Configure wlan interface
-cat <<EOF | tee -a /etc/network/interfaces 
+cat <<EOF | tee -a /etc/network/interfaces
 iface wlan0 inet dhcp
 wpa-ssid WIFISSID
 wpa-psk WIFIPSK

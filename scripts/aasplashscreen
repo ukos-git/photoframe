@@ -4,7 +4,7 @@
 # Provides:          asplashscreen
 # Required-Start:
 # Required-Stop:
-# Should-Start:      
+# Should-Start:
 # Default-Start:     S
 # Default-Stop:
 # Short-Description: Show custom splashscreen
