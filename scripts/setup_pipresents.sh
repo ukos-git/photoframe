@@ -17,4 +17,5 @@ mkdir -p /home/pi/pp_home/pp_profiles
 rsync -a /home/pi/github/pichannel/livephoto /home/pi/pp_home/pp_profiles/
 # prepare auto start
 mkdir -p /home/pi/.config/autostart
+chmod u+x /home/pi/github/pipresents-next/pipresents.py
 rsync /home/pi/github/pichannel/scripts/pipresents.desktop /home/pi/.config/autostart/
