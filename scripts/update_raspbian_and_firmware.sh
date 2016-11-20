@@ -1,5 +1,5 @@
 #!/bin/sh
-# remove to save upgrade
+# remove unnecessary packages
 apt-get -y remove wolfram-engine
 # update to latest raspbian
 apt-get -y update

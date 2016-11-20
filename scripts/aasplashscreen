@@ -1,4 +1,5 @@
 #! /bin/sh
+# script found at https://developer-blog.net/raspberry-pi-eigener-splashscreen/
 ### BEGIN INIT INFO
 # Provides:          asplashscreen
 # Required-Start:
