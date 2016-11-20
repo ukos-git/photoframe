@@ -7,7 +7,7 @@
 # MAXPCTUSG  maximum allow percentage of diskspace
 
 NEWMAILDIR=/home/pi/mail.mbox/new
-TMPPROCDIR=/home/pi/processmail/tmp
+TMPPROCDIR=/home/pi/pp_home/temp
 MEDIA=/home/pi/pp_home/media
 MEDIAMETA=/home/pi/pp_home/media-metadata
 MAXPCTUSG=95
@@ -17,7 +17,13 @@ IMGLIST="*jpg*jpeg*png*"
 LANG=
 LANGUAGE=
 LC_CTYPE="POSIX"
-
+# create files/folders if not exists
+if [ ! -e ${MEDIAMETA} ]; then
+	touch ${MEDIAMETA}
+fi
+if [ ! -e ${TMPPROCDIR} ]; then
+	mkdir -p ${TMPPROCDIR}
+fi
 # assure minimal free disk space
 cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
 while [ ${MAXPCTUSG} -lt $(df -h  ${MEDIA} | awk '{ print $5 }' | tail -1 | cut -d'%' -f1) ]
@@ -84,11 +90,11 @@ then
   sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
   # Replace double by single quote
   sed -i 's/"/\x27/g' ${MEDIAMETA}
-  	if [ $imgcount -gt 0 ] ;
-  	then
-  	/home/pi/processmail/rebuild_media.sh
-  	sudo /etc/init.d/lightdm restart
-  	fi
+  if [ $imgcount -gt 0 ] ;
+  then
+    /home/pi/github/pichannel/scripts/processmail/rebuild_media.sh
+    sudo /etc/init.d/lightdm restart
+  fi
 else
   if [ $gmresult -eq 0 ] ;
   then

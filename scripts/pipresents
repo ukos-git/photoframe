@@ -20,7 +20,7 @@ exec > /var/tmp/pipresents 3>&1 4>&1 2>&1
 NAME="pipresents"
 PATH=/usr/bin:/usr/sbin:/bin:/sbin
 PP_HOME=/home/pi
-PIP_HOME=/home/pi/pipresents
+PIP_HOME=/home/pi/github/pichannel/scripts
 
 # Exit if the package is not installed
 [ -x "${PIP_HOME}" ] || exit 0

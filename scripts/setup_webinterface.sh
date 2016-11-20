@@ -12,27 +12,8 @@ cat << EOF | sudo tee -a /etc/lighttpd/lighttpd.conf
 }
 EOF
 
-mkdir -p /home/pi/www/http/css
-mkdir -p /home/pi/www/http/img
-mkdir -p /home/pi/www/http/js
-mkdir -p /home/pi/www/stz
-mkdir -p /home/pi/www/py
-
-cd /home/pi/www/http
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/change.py
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/index.py
-cd /home/pi/www/http/css
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/css/default.css
-cd /home/pi/www/http/img
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/img/pichannel_logo.png
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/img/pichannel_title.png
-cd /home/pi/www/http/js
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/http/js/spin.js
-cd /home/pi/www/py
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/py/genfunctions.py
-cd /home/pi/www/stz
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/stz/index.stz
-wget https://raw.githubusercontent.com/davearias/PIChannel_dea/master/scripts/www/stz/wait.stz
+mkdir -p /home/pi/www/
+rsync -a /home/pi/github/pichannel/scripts/www/ /home/pi/www/
 chmod u+x /home/pi/www/http/*.py
 chmod u+x /home/pi/www/py/*.py
 sudo chown -R pi:pi /var/log/lighttpd

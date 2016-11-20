@@ -12,8 +12,9 @@
 
 
 do_start () {
-
-    /usr/bin/fbi -T 1 -noverbose -a /etc/pichannel.png    
+if [ -e /opt/pichannel/pichannel.png ]; then
+    /usr/bin/fbi -T 1 -noverbose -a /opt/pichannel/pichannel.png
+fi
     exit 0
 }
 
