@@ -5,8 +5,7 @@ apt-get -y install \
 	raspi-config
 # use raspi-config bash script
 source raspi-config nonint
-#sudo update-rc.d aasplashscreen defaults
-insserv /etc/init.d/aasplashscreen
+update-rc.d aasplashscreen defaults
 cp /var/tmp/pichannel.png /etc
 # boot mode quiet on tty3
 do_boot_splash 0
