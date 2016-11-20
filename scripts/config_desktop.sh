@@ -37,9 +37,6 @@ sed --in-place "s/desktop_bg=.*/desktop_bg=#000000/g" \
 sed --in-place "s/show_trash=.*/show_trash=0/g" \
 /home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
 ####apt-get -y remove pcmanfm
-## Disable screenblanking and screensaver
-sudo sed --in-place '/#!\/bin\/sh/a\# Disable screenblanking\n\xset s off\n\xset -dpms\n\xset s noblank' /etc/X11/xinit/xinitrc
-sudo sed --in-place 's/^#xserver-command=X/xserver-command=X -s 0 -dpms/' /etc/lightdm/lightdm.conf
 ## Disable mousepointer
 sudo sed  --in-place 's/^\(exec.*\/usr\/bin\/X.*\)/\1 -nocursor/' /etc/X11/xinit/xserverrc
 

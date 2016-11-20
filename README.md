@@ -35,6 +35,7 @@ configuration of additional features
 * setup_webinterface.sh
 * setup_getmail.sh
 * setup_pipresents.sh
+* config_screensaver.sh
 
 wifi and mail provider can be set via the web-gui. If you want to set it manually look below
 
