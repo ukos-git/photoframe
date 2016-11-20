@@ -1,14 +1,14 @@
 #/bin/sh
-sudo apt-get install imagemagick
-sudo apt-get -y install getmail4
+sudo apt-get -q -y install \
+	getmail4 \
+	imagemagick \
+	maildir-utils
 mkdir ~/.getmail
 cd ~/.getmail
 wget https://github.com/reddipped/PIChannel/raw/master/scripts/processmail/getmailrc
 mkdir -p ~/mail.mbox/new
 mkdir -p ~/mail.mbox/cur
 mkdir -p ~/mail.mbox/tmp
-# install mailutils
-sudo apt-get -y install maildir-utils
 # install mail processing
 mkdir -p ~/processmail/tmp
 # create processmail.sh script
