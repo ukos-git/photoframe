@@ -10,8 +10,6 @@ sed --in-place "s/^\(iface wlan0 inet manual.*\)/#\1/" \
  /etc/network/interfaces
 sed --in-place "s/^\(wpa-roam.*\)/#\1/" /etc/network/interfaces
 sed --in-place "s/^\(iface default.*\)/#\1/" /etc/network/interfaces
-# set hostname
-echo "pichannel" | sudo tee /etc/hostname
 # create wifi monitoring script to prevent disconnect
 mkdir /root/scripts
 cat <<EOF2 > /root/scripts/wifimonitor.sh
