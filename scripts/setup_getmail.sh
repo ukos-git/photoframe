@@ -4,7 +4,7 @@ sudo apt-get -q -y install \
 	imagemagick \
 	maildir-utils
 mkdir -p ~/.getmail
-rsync /home/pi/github/pichannel/scripts/processmail/getmailrc ~/.getmail/
+ln -s -f /home/pi/github/pichannel/scripts/processmail/getmailrc ~/.getmail/
 mkdir -p ~/mail.mbox/new
 mkdir -p ~/mail.mbox/cur
 mkdir -p ~/mail.mbox/tmp

@@ -10,5 +10,9 @@ apt-get -y autoclean
 # update firmware
 apt-get -y install rpi-update
 rpi-update
+# update github repositories
+if [ ! -e /home/pi/github/pichannel/scripts/setup_github.sh ]; then
+	sh /home/pi/github/pichannel/scripts/setup_github.sh
+fi
 # restart pi
 shutdown -r 0 now

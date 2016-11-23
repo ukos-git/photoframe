@@ -12,10 +12,7 @@ cat << EOF | sudo tee -a /etc/lighttpd/lighttpd.conf
 }
 EOF
 
-mkdir -p /home/pi/www/
-rsync -a /home/pi/github/pichannel/scripts/www/ /home/pi/www/
-chmod u+x /home/pi/www/http/*.py
-chmod u+x /home/pi/www/py/*.py
+ln -s /home/pi/github/pichannel/scripts/www /home/pi/
 sudo chown -R pi:pi /var/log/lighttpd
 sudo service lighttpd restart
 

@@ -26,3 +26,10 @@ else
 	cd /home/pi/github/pipresents-next-examples
 	sudo -u pi git pull -q
 fi
+
+# set permissions (probably done by git)
+chmod u+x /home/pi/github/pichannel/scripts/www/http/*.py
+chmod u+x /home/pi/github/pichannel/scripts/www/py/*.py
+chmod u+x /home/pi/github/pichannel/scripts/aasplashscreen
+chmod u+x /home/pi/github/pichannel/scripts/update.sh
+chmod u+x /home/pi/github/pipresents-next/pipresents.py
