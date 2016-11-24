@@ -59,7 +59,7 @@ then
     if [ $? -eq 0 -a ! -z "$(ls -A $TMPPROCDIR)" ] ;
     then
       # extract short message
-      shortmessage=`mu view "${file}" --summary | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
+      shortmessage=`mu view "${file}" | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
 
       # process all attachments, move all attachments to livetracks dir with timestamp filename 
       for attach in ${TMPPROCDIR}/*
