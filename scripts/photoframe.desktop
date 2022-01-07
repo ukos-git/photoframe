@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Slideshow
+Exec=/usr/bin/python /home/pi/app/photoframe/scripts/slideshow.py
+Terminal=false
+StartupNotify=false

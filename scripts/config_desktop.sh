@@ -1,16 +1,22 @@
 #!/bin/sh
-# install lxde-core components and lightdm
-## Cleanup desktop
-rm -rf ~/Desktop/*
-cp ~/.config/lxpanel/LXDE-pi/panels/panel \
-/var/tmp/panel.bkp
-cat <<EOF2 | tee ~/.config/lxpanel/LXDE-pi/panels/panel
+
+set -e
+
+if test $EUID -eq 0; then
+  echo "$0 must be run as normal user."
+  exit 1
+fi
+
+echo 
+read -p "Hide top Panel? [y/N] " prompt
+if test "$prompt" == "y"; then
+cat <<EOF2 | tee /home/pi/.config/lxpanel/LXDE-pi/panels/panel
 Global {
     edge=bottom
     allign=left
     margin=0
     widthtype=percent
-    width=0
+    width=100
     height=0
     transparent=1
     tintcolor=#000000
@@ -28,15 +34,19 @@ Global {
     iconsize=24
 }
 EOF2
-sed --in-place "s/wallpaper_mode.*/wallpaper_mode=0/g" \
-/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
-sed --in-place "s/wallpaper=.*/wallpaper=/g" \
-/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
-sed --in-place "s/desktop_bg=.*/desktop_bg=#000000/g" \
-/home/pi/.config/pcmanfm/LXDE-pi/pcmanfm.conf
-sed --in-place "s/show_trash=.*/show_trash=0/g" \
-/home/pi/.config/pcmanfm/LXDE/pcmanfm.conf
-####apt-get -y remove pcmanfm
-## Disable mousepointer
-sudo sed  --in-place 's/^\(exec.*\/usr\/bin\/X.*\)/\1 -nocursor/' /etc/X11/xinit/xserverrc
+else
+  cp -f /etc/xdg/lxpanel/LXDE-pi/panels/panel /home/pi/.config/lxpanel/LXDE-pi/panels/panel
+fi
+lxpanelctl refresh
 
+
+echo 
+read -p "Disable Screensaver [y/N] " prompt
+if test "$prompt" == "y"; then
+cat <<EOF | tee /home/pi/.xsessionrc
+# turn off default screensaver
+xset s off
+# turn off default standby, hibernate, ... after n minutes
+xset -dpms
+EOF
+fi

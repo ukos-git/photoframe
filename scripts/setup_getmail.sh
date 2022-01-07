@@ -1,20 +1,16 @@
 #/bin/sh
-sudo apt-get -q -y install \
-	getmail4 \
-	imagemagick \
-	maildir-utils
-mkdir -p ~/.getmail
-ln -s -f /home/pi/github/pichannel/scripts/processmail/getmailrc ~/.getmail/
-mkdir -p ~/mail.mbox/new
-mkdir -p ~/mail.mbox/cur
-mkdir -p ~/mail.mbox/tmp
+
+set -e
+
+if test $EUID -eq 0; then
+  echo "$0 must be run as normal user."
+  exit 1
+fi
+
+mkdir -p /home/pi/.getmail
+mkdir -p /home/pi/mail.mbox/new
+mkdir -p /home/pi/mail.mbox/cur
+mkdir -p /home/pi/mail.mbox/tmp
+
 # schedule mail retrieval and processing
-(crontab -l; \
-echo "*/5 * * * * /bin/sh /home/pi/github/pichannel/scripts/processmail/processmail.sh" ) \
-| crontab -
-# create empty status file
-touch /var/tmp/processmail.sts
-# rebuild presentation on boot
-sudo sed --in-place '/^exit 0/i sudo -u pi /bin/sh /home/pi/github/pichannel/scripts/processmail/rebuild_media.sh &' /etc/rc.local
-# create processmail.sts on boot
-sudo sed --in-place '/^exit 0/i sudo -u pi touch /var/tmp/processmail.sts &' /etc/rc.local
+(crontab -l; echo "*/5 * * * * /bin/sh /home/pi/app/photoframe/scripts/processmail.sh" ) | crontab -

@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Pi Presents
-Exec=/home/pi/github/pipresents-next/pipresents.py -p livephoto -f --gpio --home /home/pi
-Terminal=false
-StartupNotify=false

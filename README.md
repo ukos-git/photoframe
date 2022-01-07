@@ -1,83 +1,68 @@
-PIChannel
-=============
+# Photo frame for the raspberry pi
 
-This Version of PIChannel brings some improvements on the setup scripts.
+A setup for a photo display frame with a raspberry pi. The modifications are
+based on a standard *raspibian*. It adds automatic E-Mail retrieval and filters
+out the pictures from the attachment. It then displays these images as a
+slideshow.
 
-It also includes some impovements from davearias and was then rebased to upstream by reddiped.
+## hardware
 
-List of Improvements
-=============
-* Installation scripts make use of the [raspi-config](https://github.com/RPi-Distro/raspi-config) script
-* reduced the use of wget and used a clone from github instead
-* support for different locale
-* Shuffle playback mode
-* upload media via web interface
-* scan for media that was not emailed
+You will need a rapberry pi prepared with a bullseye release. The installation
+routine is tested with `2021-10-30-raspios-bullseye-armhf.zip`
 
-Installation order
-=============
-The scripts are divided in three groups:
+## setup
 
-* anything that affects the system
-* installation and configuration of third party software
-* optional changes
+The scripts are divided into three groups:
+
+- anything that affects the system
+- installation and configuration of third party software
+- optional changes
 
 The first two groups of scripts are mandatory for the functionality of the pi.
 The third group is up to the user to execute.
 
-recommended execution order of the scripts is
+### download
 
-changes to the system
-* update_raspbian_and_firmware.sh
-* init_pi.sh
-* setup_github.sh
-* setup_bootlogo.sh
-* setup_wifi.sh
-
-configuration of additional features
-* setup_webinterface.sh
-* setup_getmail.sh
-* setup_pipresents.sh
-* config_screensaver.sh
-
-wifi and mail provider can be set via the web-gui. If you want to set it manually look below
-
-if everything works you could do some clean up
-* config_desktop.sh
-* config_raspbian.sh
-
-manual setup
-=============
-manually change wifi configuration as setup_wifi is a little bit hacky.
 ```
-sudo vim /etc/network/interfaces
-```
-manually edit getmailrc
-```
-vim ~/.getmail/getmailrc
+cd $HOME/Downloads
+wget https://raw.githubusercontent.com/ukos-git/photoframe/master/scripts/setup_github.sh
+bash setup_github.sh
 ```
 
-manual checks
-=============
-check the crontab for duplicate tasks
-```
-crontab -l
-sudo crontab -l
-```
-correct them via
-```
-crontab -e
-```
-also check rc.local for duplicates
-```
-sudo vim /etc/rc.local
-```
-Project contributers
-=============
-The project uses a lot of third party packages but the fork is derived from
-* [reddipped](https://github.com/reddipped) with [reddipped/PIChannel](https://github.com/reddipped/PIChannel)
-* [davearias](https://github.com/davearias) with [davearias/PIChannel_dea](https://github.com/davearias/PIChannel_dea)
+This will download and execute `scripts/setup_github.sh`. The script clones the
+necessary dependencies into `~/app` directory of the current user. This
+repository is cloned into `~/app/photoframe`.
 
-Original contributer's Blog entry
-=============
-[Grandpa's familiy Channel](http://www.reddipped.com/2014/06/grandpas-family-channel/)
+### system
+
+Changes to the system need to be executed with root privilegeds. If in doubt,
+check the content of the files before executing them.
+
+- `scripts/init_raspbian.sh` does a a full system upgrade and update the firmware.
+- `scripts/init_pi.sh` sets up some global configuration of the system like autologin.
+- `scripts/setup_bootlogo.sh` set the plymouth boot logo to `img/logo.png`
+
+These scripts should only be executed once at the initial system configuration
+
+### features
+
+configuration of additional features:
+
+- `scripts/setup_getmail.sh` install comand line mail client as cron job
+- `scripts/setup_slideshow.sh` install autoload of `media` folder slideshow
+- `scripts/config_desktop.sh` remove panel, set background, remove screen blanking
+
+### manual configuration
+
+- add mail credentials to `~/.getmail/getmailrc`
+- connect to the appropriate wifi preferrably in the lxde desktop environment.
+
+## fork
+
+This project is based on [Grandpa's familiy
+Channel](http://www.reddipped.com/2014/06/grandpas-family-channel/) and
+integrates code from
+
+- [reddipped](https://github.com/reddipped) with [reddipped/PIChannel](https://github.com/reddipped/PIChannel)
+- [davearias](https://github.com/davearias) with [davearias/PIChannel_dea](https://github.com/davearias/PIChannel_dea)
+- [strompi](https://github.com/joy-it/strompi3)

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # NEWMAILDIR received new maildir
 # TMPPROCDIR tmp dir for processing new attachments
 # MEDIA      destination dir for media files
@@ -7,9 +9,10 @@
 # MAXPCTUSG  maximum allow percentage of diskspace
 
 NEWMAILDIR=/home/pi/mail.mbox/new
-TMPPROCDIR=/home/pi/pp_home/temp
-MEDIA=/home/pi/pp_home/media
-MEDIAMETA=/home/pi/pp_home/media-metadata
+TMPPROCDIR=/home/pi/app/temp
+MEDIA=/home/pi/app/photoframe/media
+MEDIAMETA=/home/pi/app/photoframe/media/meta.yml
+STATUSFILE=/home/pi/app/processmail.sts
 MAXPCTUSG=95
 APPLEMOVEXT="*mov*"
 IMGLIST="*jpg*jpeg*png*"
@@ -19,30 +22,17 @@ LANGUAGE=
 LC_CTYPE="POSIX"
 # create files/folders if not exists
 if [ ! -e ${MEDIAMETA} ]; then
-	touch ${MEDIAMETA}
+  touch ${MEDIAMETA}
 fi
 if [ ! -e ${TMPPROCDIR} ]; then
-	mkdir -p ${TMPPROCDIR}
+  mkdir -p ${TMPPROCDIR}
 fi
-# assure minimal free disk space
-cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
-while [ ${MAXPCTUSG} -lt $(df -h  ${MEDIA} | awk '{ print $5 }' | tail -1 | cut -d'%' -f1) ]
-do
-  removefile=$(ls -1 ${MEDIA} | sort | head -1)
-  if [ ! -z "${removefile}" ] ;
-  then
-    rm "${MEDIA}/$removefile"
-    cat ${MEDIAMETA}.TMP | grep -v "$removefile" > ${MEDIAMETA}.TMP
-  fi
-done
-cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
 
 # log status
 status=`date +"%F at %T"`
 
 # retrieve new mail
 getmailresult=$(getmail --delete --all  2>&1 >/dev/null)
-
 gmresult=$?
 
 # if e-mail retrieved successfully
@@ -77,7 +67,7 @@ then
         else
             mv "${attach}" "${MEDIA}/${medianame}"
         fi
-        echo ${medianame} ${shortmessage} >> ${MEDIAMETA}.TMP
+        echo "${medianame}: ${shortmessage}" >> ${MEDIAMETA}.TMP
       done
      fi
      rm -f $file
@@ -92,8 +82,7 @@ then
   sed -i 's/"/\x27/g' ${MEDIAMETA}
   if [ $imgcount -gt 0 ] ;
   then
-    /home/pi/github/pichannel/scripts/processmail/rebuild_media.sh
-    sudo /etc/init.d/lightdm restart
+    sudo systemctl restart lightdm.service
   fi
 else
   if [ $gmresult -eq 0 ] ;
@@ -104,5 +93,4 @@ else
   fi
 fi
 
-echo $status > /var/tmp/processmail.sts
-
+echo $status > $STATUSFILE

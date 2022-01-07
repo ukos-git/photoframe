@@ -1,0 +1,29 @@
+version: 1
+disable_existing_loggers: true
+
+formatters:
+  brief:
+    format: '[%(levelname)s][%(name)s] %(message)s'
+  default:
+    format: '%(asctime)s %(levelname)s %(threadName)s %(name)s %(filename)s:%(lineno)d %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: brief
+    stream: ext://sys.stdout
+  file:
+    class: logging.handlers.TimedRotatingFileHandler
+    formatter: default
+    level: INFO
+    filename: slideshow.log
+    backupCount: 90
+    encoding: utf8
+    when: midnight
+    interval: 1
+loggers:
+  photoframe:
+    handlers: [console, file]
+    level: DEBUG
+  photoframe.app:
+    propagate: True
