@@ -25,6 +25,7 @@ images = iter(list())
 meta = dict()
 email = 'dummy@ab.cd'
 shuffle = True
+show_last10 = True
 
 script_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(script_path, '..'))
@@ -135,4 +136,7 @@ label_meta.config(
   width=100,
   background='white')
 label_meta.place(relx=0.5, y=0, anchor=tkinter.N)
+if show_last10:
+  meta, images = load_images()
+  images = iter(sorted(list(images), reverse=True)[10:])
 app.root.after(cycle_time, next_image)
