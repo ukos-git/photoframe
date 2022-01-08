@@ -8,7 +8,6 @@ ToDo:
 """
 
 import tkinter
-#from tkinter import *
 import os
 import PIL.ImageTk
 import logging.config
@@ -19,11 +18,13 @@ import sys
 
 from threading import Thread
 import signal
+import random
 
 cycle_time = 10000
 images = iter(list())
 meta = dict()
 email = 'dummy@ab.cd'
+shuffle = True
 
 script_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(script_path, '..'))
@@ -61,7 +62,9 @@ def sigint_handler(sig, frame):
 def load_images():
   logger.info('reloading images')
   files = map(os.path.splitext, os.listdir(images_path))
-  images = filter(lambda x: x[1].lower() in ['.jpg', '.png'], files)
+  images = list(filter(lambda x: x[1].lower() in ['.jpg', '.jpeg', '.png'], files))
+  if shuffle:
+    random.shuffle(images)
   with open(meta_file) as fso:
     meta = yaml.safe_load(fso.read())
   return meta, map(lambda x: os.path.join(images_path, ''.join(x)), images)
