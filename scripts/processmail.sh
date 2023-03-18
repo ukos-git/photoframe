@@ -63,7 +63,7 @@ then
         medianame=$(date +%Y%m%d%H%M%S-%N).${extension}
         # fix orientation for images sent by smartphones
         if echo $IMGLIST | grep -iq $extension ;
-	    then
+        then
         	convert -auto-orient "${attach}" "${MEDIA}/${medianame}"
         	rm -f "${attach}"
         else
