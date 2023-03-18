@@ -50,6 +50,8 @@ then
     then
       # extract short message
       shortmessage=`mu view "${file}" | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
+      # Escape double quotes
+      shortmessage="${shortmessage//\"/\\\"}"
 
       # process all attachments, move all attachments to livetracks dir with timestamp filename 
       for attach in ${TMPPROCDIR}/*
@@ -61,13 +63,13 @@ then
         medianame=$(date +%Y%m%d%H%M%S-%N).${extension}
         # fix orientation for images sent by smartphones
         if echo $IMGLIST | grep -iq $extension ;
-	    then
+        then
         	convert -auto-orient "${attach}" "${MEDIA}/${medianame}"
         	rm -f "${attach}"
         else
             mv "${attach}" "${MEDIA}/${medianame}"
         fi
-        echo "${medianame}: ${shortmessage}" >> ${MEDIAMETA}.TMP
+        echo "${medianame}: \"${shortmessage}\"" >> ${MEDIAMETA}.TMP
       done
      fi
      rm -f $file
@@ -78,8 +80,6 @@ then
   cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
   # Remove emoticons
   sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
-  # Replace double by single quote
-  sed -i 's/"/\x27/g' ${MEDIAMETA}
   if [ $imgcount -gt 0 ] ;
   then
     sudo systemctl restart lightdm.service
