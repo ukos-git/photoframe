@@ -43,16 +43,14 @@ then
   # for each new received e-mail
   for file in ${NEWMAILDIR}/*
   do
+    # extract short message
+    shortmessage=`mu view "${file}" | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
+    # Escape double quotes
+    shortmessage="${shortmessage//\"/\\\"}"
+    echo "Subject: $shortmessage" >&2
     # extract supported attachments
-    mu extract  --overwrite --target-dir=${TMPPROCDIR} "${file}" '.*(\.jpg|\.jpeg|\.png|\.mov|\.mp4)'
-    # if attachments extracted successfully and tmp processing directory is not empty
-    if [ $? -eq 0 -a ! -z "$(ls -A $TMPPROCDIR)" ] ;
+    if mu extract  --overwrite --target-dir=${TMPPROCDIR} "${file}" '.*(\.jpg|\.jpeg|\.png|\.mov|\.mp4)'
     then
-      # extract short message
-      shortmessage=`mu view "${file}" | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
-      # Escape double quotes
-      shortmessage="${shortmessage//\"/\\\"}"
-
       # process all attachments, move all attachments to livetracks dir with timestamp filename 
       for attach in ${TMPPROCDIR}/*
       do
@@ -71,8 +69,8 @@ then
         fi
         echo "${medianame}: \"${shortmessage}\"" >> ${MEDIAMETA}.TMP
       done
+      rm -f "${file}"
      fi
-     rm -f $file
   done
 
   status="${status} success ${imgcount} new images retrieved"
