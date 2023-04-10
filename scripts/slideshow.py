@@ -60,7 +60,7 @@ def sigint_handler(sig, frame):
     app.root.update()
 
 
-def load_images():
+def load_images(shuffle=SHUFFLE):
   logger.info('reloading images')
   files = map(os.path.splitext, os.listdir(IMAGES_PATH))
   images = list(filter(lambda x: x[1].lower() in ['.jpg', '.jpeg', '.png'], files))
@@ -138,5 +138,5 @@ label_meta.config(
 label_meta.place(relx=0.5, y=0, anchor=tkinter.N)
 if SHOW_LAST10:
   META, images = load_images(shuffle=False)
-  IMAGES = iter(sorted(list(images), reverse=True)[10:])
+  IMAGES = iter(sorted(list(images), reverse=True)[:10])
 app.root.after(CYCLE_TIME, next_image)
