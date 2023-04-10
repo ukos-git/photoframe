@@ -17,6 +17,8 @@ MAXPCTUSG=95
 APPLEMOVEXT="*mov*"
 IMGLIST="*jpg*jpeg*png*"
 
+LC_CTYPE="POSIX"
+
 # create files/folders if not exists
 if [ ! -e ${MEDIAMETA} ]; then
   touch ${MEDIAMETA}
