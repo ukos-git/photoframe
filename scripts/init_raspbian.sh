@@ -32,6 +32,7 @@ echo
 read -p "install required packages [y/N] " prompt
 if test "$prompt" == "y"; then
   apt install -y \
+    fonts-noto-color-emoji \
     getmail \
     git \
     imagemagick \
