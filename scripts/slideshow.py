@@ -20,26 +20,26 @@ from threading import Thread
 import signal
 import random
 
-cycle_time = 10000
-images = iter(list())
-meta = dict()
-email = 'dummy@ab.cd'
-shuffle = True
-show_last10 = True
+CYCLE_TIME = 10000
+IMAGES = iter(list())
+META = dict()
+EMAIL = 'dummy@ab.cd'
+SHUFFLE = True
+SHOW_LAST10 = True
 
-script_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(script_path, '..'))
-print(f'Project root: {project_path}', file=sys.stderr)
+SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
+PROJECT_PATH = os.path.abspath(os.path.join(SCRIPT_PATH, '..'))
+print(f'Project root: {PROJECT_PATH}', file=sys.stderr)
 
-with open(os.path.join(project_path, 'logging.yml')) as fso:
+with open(os.path.join(PROJECT_PATH, 'logging.yml')) as fso:
   logging.config.dictConfig(yaml.safe_load(fso.read()))
 logger = logging.getLogger('photoframe')
 
-images_path = os.path.join(project_path, 'media')
-logger.debug(f'Images path: {images_path}')
-meta_file = os.path.join(project_path, 'media', 'meta.yml')
-logger.debug(f'Images meata file: {meta_file}')
-logo = os.path.join(project_path, 'img/logo.png')
+IMAGES_PATH = os.path.join(PROJECT_PATH, 'media')
+logger.debug(f'Images path: {IMAGES_PATH}')
+META_FILE = os.path.join(PROJECT_PATH, 'media', 'meta.yml')
+logger.debug(f'Images meata file: {META_FILE}')
+LOGO = os.path.join(PROJECT_PATH, 'img/logo.png')
 
 
 class SlideShow(Thread):
@@ -60,15 +60,15 @@ def sigint_handler(sig, frame):
     app.root.update()
 
 
-def load_images():
+def load_images(shuffle=SHUFFLE):
   logger.info('reloading images')
-  files = map(os.path.splitext, os.listdir(images_path))
+  files = map(os.path.splitext, os.listdir(IMAGES_PATH))
   images = list(filter(lambda x: x[1].lower() in ['.jpg', '.jpeg', '.png'], files))
   if shuffle:
     random.shuffle(images)
-  with open(meta_file) as fso:
+  with open(META_FILE) as fso:
     meta = yaml.safe_load(fso.read())
-  return meta, map(lambda x: os.path.join(images_path, ''.join(x)), images)
+  return meta, map(lambda x: os.path.join(IMAGES_PATH, ''.join(x)), images)
 
 
 @functools.lru_cache(maxsize=64)
@@ -93,12 +93,12 @@ def resize_image(file_name):
 
 
 def next_image():
-  global images, meta
+  global IMAGES, META
   try:
-    file_name = next(images)
+    file_name = next(IMAGES)
     image = resize_image(file_name)
   except StopIteration:
-    meta, images = load_images()
+    META, IMAGES = load_images()
     return next_image()
   except PIL.UnidentifiedImageError:
     app.logger.warning('Image not readable.')
@@ -109,14 +109,14 @@ def next_image():
   label_image.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
   try:
     _, key = os.path.split(file_name)
-    metadata = meta[key]
+    metadata = META[key]
     logger.info(f'Meta Info: {metadata}')
   except KeyError:
     metadata = file_name
   label_meta.config(text=metadata)
   label_meta.text = metadata
   label_meta.place(relx=0.5, y=0, anchor=tkinter.N)
-  app.root.after(cycle_time, next_image)
+  app.root.after(CYCLE_TIME, next_image)
 
 
 app = SlideShow()
@@ -127,16 +127,16 @@ while not app.ready:
   time.sleep(1)
 screen_width, screen_height = app.root.winfo_screenwidth(), app.root.winfo_screenheight()
 logging.debug('Window size is width: {screen_width}, height: {screen_height}')
-tkimage = PIL.ImageTk.PhotoImage(resize_image(logo))
+tkimage = PIL.ImageTk.PhotoImage(resize_image(LOGO))
 label_image = tkinter.Label(app.root, image=tkimage)
 label_image.pack()
-label_meta = tkinter.Label(app.root, text=email)
+label_meta = tkinter.Label(app.root, text=EMAIL)
 label_meta.config(
   font=('TkDefaultFont', 32),
   width=100,
   background='white')
 label_meta.place(relx=0.5, y=0, anchor=tkinter.N)
-if show_last10:
-  meta, images = load_images()
-  images = iter(sorted(list(images), reverse=True)[10:])
-app.root.after(cycle_time, next_image)
+if SHOW_LAST10:
+  META, images = load_images(shuffle=False)
+  IMAGES = iter(sorted(list(images), reverse=True)[:10])
+app.root.after(CYCLE_TIME, next_image)
