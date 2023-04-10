@@ -17,9 +17,6 @@ MAXPCTUSG=95
 APPLEMOVEXT="*mov*"
 IMGLIST="*jpg*jpeg*png*"
 
-LANG=
-LANGUAGE=
-LC_CTYPE="POSIX"
 # create files/folders if not exists
 if [ ! -e ${MEDIAMETA} ]; then
   touch ${MEDIAMETA}
@@ -76,8 +73,6 @@ then
   status="${status} success ${imgcount} new images retrieved"
 
   cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
-  # Remove emoticons
-  sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
   if [ $imgcount -gt 0 ] ;
   then
     sudo systemctl restart lightdm.service
