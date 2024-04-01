@@ -7,8 +7,8 @@ slideshow.
 
 ## hardware
 
-You will need a rapberry pi prepared with a bullseye release. The installation
-routine is tested with `2021-10-30-raspios-bullseye-armhf.zip`
+You will need a rapberry pi prepared with a bookworm release. The installation
+routine is tested with `2024-03-15-raspios-bookworm-arm64.img.xz`
 
 ## setup
 
