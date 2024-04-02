@@ -47,10 +47,10 @@ then
     shortmessage="${shortmessage//\"/\\\"}"
     echo "Subject: $shortmessage" >&2
     # extract supported attachments
-    if mu extract  --overwrite --target-dir=${TMPPROCDIR} "${file}" '.*(\.jpg|\.jpeg|\.png|\.mov|\.mp4)'
+    if mu extract --overwrite --save-attachments --target-dir=${TMPPROCDIR} "${file}"
     then
       # process all attachments, move all attachments to livetracks dir with timestamp filename 
-      for attach in ${TMPPROCDIR}/*
+      for attach in $(find "$TMPPROCDIR" -type f -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.mov' -o -iname '*.mp4')
       do
         imgcount=$(($imgcount + 1))
         extension="${attach##*.}"
