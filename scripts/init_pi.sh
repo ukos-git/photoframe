@@ -38,10 +38,6 @@ if raspi-config nonint is_pione; then
 fi
 
 echo
-echo Set GPU memory to 64
-raspi-config nonint do_memory_split 64
-
-echo
 echo expand fs
 raspi-config nonint do_expand_rootfs
 
