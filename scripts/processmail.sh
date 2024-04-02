@@ -35,7 +35,6 @@ getmailresult=$(getmail --delete --all  2>&1 >/dev/null)
 gmresult=$?
 
 # if e-mail retrieved successfully
-cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
 if [ $gmresult -eq 0 -a ! -z "$(ls -A ${NEWMAILDIR})" ] ;
 then
   imgcount=0
@@ -66,7 +65,7 @@ then
         else
             mv "${attach}" "${MEDIA}/${medianame}"
         fi
-        echo "${medianame}: \"${shortmessage}\"" >> ${MEDIAMETA}.TMP
+        echo "${medianame}: \"${shortmessage}\"" >> ${MEDIAMETA}
       done
       rm -f "${file}"
      fi
@@ -74,7 +73,6 @@ then
 
   status="${status} success ${imgcount} new images retrieved"
 
-  cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
   if [ $imgcount -gt 0 ] ;
   then
     sudo systemctl restart lightdm.service
