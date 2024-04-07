@@ -1,4 +1,4 @@
-#/bin/sh
+#!/usr/bin/bash
 
 set -e
 
@@ -13,4 +13,4 @@ mkdir -p /home/pi/mail.mbox/cur
 mkdir -p /home/pi/mail.mbox/tmp
 
 # schedule mail retrieval and processing
-(crontab -l; echo "*/5 * * * * /bin/sh /home/pi/app/photoframe/scripts/processmail.sh" ) | crontab -
+(crontab -l; echo "*/5 * * * * /usr/bin/bash /home/pi/app/photoframe/scripts/processmail.sh" ) | crontab -
